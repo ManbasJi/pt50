@@ -1,74 +1,39 @@
 <template>
-  <titlebar leftArrow=""
-            :leftText.sync="titleName"
-            titleName=""
-            bgcolor=""></titlebar>
+  <titlebar leftArrow="" :leftText.sync="titleName" titleName="" bgcolor="">
+  </titlebar>
   <view class="search-container">
     <view class="search-box">
       <!-- <i class="iconfont icon-search"></i> -->
-      <image style="width:50rpx;height:50rpx;margin-left:10rpx;"
-             src="../images/sousuo.png"
-             lazy-load="false">
+      <image style="width:50rpx;height:50rpx;margin-left:10rpx;" src="../images/sousuo.png" lazy-load="false">
       </image>
-      <input class="input"
-             placeholder="搜索商品"
-             confirm-type="搜索"
-             bindconfirm="onSearch"
-             bindinput="onChangeInput" />
+      <input class="input" placeholder="搜索商品" confirm-type="搜索" bindconfirm="onSearch" bindinput="onChangeInput" />
     </view>
-    <view class="search-btn"
-          hover-class="click-hover-o"
-          @tap="onSearch">搜索</view>
+    <view class="search-btn" hover-class="click-hover-o" @tap="onSearch">搜索</view>
   </view>
   <view style="width:100%;background:#fff;height:600rpx;padding-top:21rpx;">
-    <banner wx:if="{{bannerList.length>0}}"
-            :bannerList.sync="bannerList"
-            width="95"
-            scale="2.41"
-            isNavigator="true"
-            @image-click.user="onSwpImageClick"></banner>
-    <notice wx:if="{{noticeContent}}"
-            color="#333"
-            left-icon="/images/notice-icon.png"
-            text="{{noticeContent}}"></notice>
+    <banner wx:if="{{bannerList.length>0}}" :bannerList.sync="bannerList" width="95" scale="2.41" isNavigator="true" @image-click.user="onSwpImageClick"></banner>
+    <notice wx:if="{{noticeContent}}" color="#333" left-icon="/images/notice-icon.png" text="{{noticeContent}}"></notice>
     <view class="menu-box">
       <view class="menu-box_1">
-        <repeat for="{{menuList}}"
-                index="index"
-                key="index"
-                items="item">
-          <view class="menu-list"
-                @tap="onMenuClick({{index}})">
-            <image src="{{item.icon}}"
-                   mode="aspectFill" />
+        <repeat for="{{menuList}}" index="index" key="index" items="item">
+          <view class="menu-list" @tap="onMenuClick({{index}})">
+            <image src="{{item.icon}}" mode="aspectFill" />
             <text class="zl-ellipsis">{{item.name}}</text>
           </view>
         </repeat>
       </view>
-      <view class="menu-box_2"
-            wx:if="{{version&&version=='1'}}">
-        <repeat for="{{saleMenuList}}"
-                index="index"
-                key="index"
-                items="item">
-          <view class="menu-list"
-                @tap="onSaleMenuClickT({{index}})">
-            <image src="{{item.icon}}"
-                   mode="aspectFill" />
+      <view class="menu-box_2" wx:if="{{version&&version=='1'}}">
+        <repeat for="{{saleMenuList}}" index="index" key="index" items="item">
+          <view class="menu-list" @tap="onSaleMenuClickT({{index}})">
+            <image src="{{item.icon}}" mode="aspectFill" />
             <text class="zl-ellipsis">{{item.name}}</text>
           </view>
         </repeat>
       </view>
-      <view class="menu-box_2"
-            wx:if="{{version&&version!='1'}}">
-        <repeat for="{{saleMenuList}}"
-                index="index"
-                key="index"
-                items="item">
-          <view class="menu-list"
-                @tap="onSaleMenuClick({{index}})">
-            <image src="{{item.icon}}"
-                   mode="aspectFill" />
+      <view class="menu-box_2" wx:if="{{version&&version!='1'}}">
+        <repeat for="{{saleMenuList}}" index="index" key="index" items="item">
+          <view class="menu-list" @tap="onSaleMenuClick({{index}})">
+            <image src="{{item.icon}}" mode="aspectFill" />
             <text class="zl-ellipsis">{{item.name}}</text>
           </view>
         </repeat>
@@ -76,645 +41,616 @@
     </view>
   </view>
   <view style="margin-top:150rpx;height:1rpx;width:100%;"></view>
-  <view class="remai-container"
-        wx:if="{{tagList}}">
-    <scrollGoodsList @item-click.user="goToGoodsDetail"
-                     @all-click.user="toGoodsList"
-                     :dataList.sync="tagList"></scrollGoodsList>
+  <view class="remai-container" wx:if="{{tagList}}">
+    <scrollGoodsList @item-click.user="goToGoodsDetail" @all-click.user="toGoodsList" :dataList.sync="tagList"></scrollGoodsList>
   </view>
-
-  <view class="pintuan-container"
-        wx:if="{{pingTuanList&&version&&version!='1'}}">
-    <pinTuanHomeList @item-click.user="goToGoodsDetail"
-                     @all-click.user="toGoodsList"
-                     :dataList.sync="pingTuanList"></pinTuanHomeList>
+  <view class="pintuan-container" wx:if="{{pingTuanList&&version&&version!='1'}}">
+    <pinTuanHomeList @item-click.user="goToGoodsDetail" @all-click.user="toGoodsList" :dataList.sync="pingTuanList"></pinTuanHomeList>
   </view>
-
-  <view class="kanjia-container"
-        wx:if="{{kanjiaList&&version&&version!='1'}}">
-    <kanJiaHomeList @item-click.user="goToKanJia"
-                    @all-click.user="toGoodsList"
-                    :dataList.sync="kanjiaList"></kanJiaHomeList>
+  <view class="kanjia-container" wx:if="{{kanjiaList&&version&&version!='1'}}">
+    <kanJiaHomeList @item-click.user="goToKanJia" @all-click.user="toGoodsList" :dataList.sync="kanjiaList"></kanJiaHomeList>
   </view>
-
-  <view class="tuijian-container"
-        wx:if="{{tuiJianList}}">
-    <tuiJianHomeTwoList @item-click.user="goToGoodsDetail"
-                        @all-click.user="toGoodsList"
-                        :dataList.sync="tuiJianList"></tuiJianHomeTwoList>
+  <view class="tuijian-container" wx:if="{{tuiJianList}}">
+    <tuiJianHomeTwoList @item-click.user="goToGoodsDetail" @all-click.user="toGoodsList" :dataList.sync="tuiJianList"></tuiJianHomeTwoList>
   </view>
   <powerby></powerby>
   <view class="goods-button">
     <image src="/images/kefu.png">
-      <button open-type="contact"
-              session-from="weapp"></button></image>
+      <button open-type="contact" session-from="weapp"></button></image>
   </view>
-  <view class="goods-button"
-        style="bottom:90rpx;"
-        bindtap="callPhone">
+  <view class="goods-button" style="bottom:90rpx;" bindtap="callPhone">
     <image src="/images/phone.png"></image>
   </view>
   <!-- <loadMore wx:if="{{isLoadMore}}"
-            :isNoData.sync="isNoData"></loadMore> -->
+                :isNoData.sync="isNoData"></loadMore> -->
 </template>
 <script>
-import wepy from 'wepy';
-import tip from '@/utils/tip';
-import { USERINFO } from '@/utils/constant';
-import apiUtil from '../api/apiUtil';
-// 引入组件
-import titlebar from '../components/title-bar-zl';
-import banner from '../components/banner-zl';
-import searchInput from '../components/search-input-zl';
-import loadMore from '../components/load-more-zl';
-import shopLabel from '../components/shop-label';
-import kanJiaHomeList from '../components/kanjia-home-list';
-import scrollGoodsList from '../components/scroll-goods-list';
-import tuiJianHomeList from '../components/tuijian-home-list';
-import pinTuanHomeList from '../components/pintuan-home-list';
-import tuiJianHomeTwoList from '../components/tuijian-home-two-list';
-import powerby from '../components/foot-powerby';
-export default class Home extends wepy.page {
-  config = {
-    enablePullDownRefresh: true,
-    // 引入vant 组件
-    usingComponents: {
-      notice: '../components/vant/notice-bar'
-    }
-  };
-
-  // 组件指引
-  components = {
-    titlebar: titlebar,
-    banner: banner,
-    searchInput: searchInput,
-    loadMore: loadMore,
-    shopLabel: shopLabel,
-    kanJiaHomeList: kanJiaHomeList,
-    scrollGoodsList: scrollGoodsList,
-    tuiJianHomeList: tuiJianHomeList,
-    pinTuanHomeList: pinTuanHomeList,
-    powerby: powerby,
-    tuiJianHomeTwoList: tuiJianHomeTwoList
-  };
-
-  data = {
-    titleName: '',
-    version: null,
-    customTitle: '热卖爆款',
-    userInfo: null,
-    searchInput: '',
-    isNoData: false,
-    isLoadMore: false,
-    isRefresh: true,
-    bannerList: [],
-    menuList: [],
-    saleMenuList: [],
-    shopLabelList: [],
-    pingTuanList: null,
-    tuiJianList: null,
-    tagList: null,
-    tag: '',
-    kanjiaList: null,
-    curPage: 1, // 分页起始行
-    curLimit: 10, //分页每次加载的行数
-    shopPhone: null,
-    noticeContent: null // 公告内容
-  };
-
-  onShareAppMessage () {
-    let _data = {
-      title: this.titleName,
-      path: '/pages/home?' + 'inviterId=' + this.userInfo.uid + '&share=true',
-      imageUrl: this.bannerList[0].picUrl,
-      success: function (res) {
-        // 转发成功
-      },
-      fail: function (res) {
-        // 转发失败
+  import wepy from 'wepy';
+  import tip from '@/utils/tip';
+  import {
+    USERINFO
+  } from '@/utils/constant';
+  import apiUtil from '../api/apiUtil';
+  // 引入组件
+  import titlebar from '../components/title-bar-zl';
+  import banner from '../components/banner-zl';
+  import searchInput from '../components/search-input-zl';
+  import loadMore from '../components/load-more-zl';
+  import shopLabel from '../components/shop-label';
+  import kanJiaHomeList from '../components/kanjia-home-list';
+  import scrollGoodsList from '../components/scroll-goods-list';
+  import tuiJianHomeList from '../components/tuijian-home-list';
+  import pinTuanHomeList from '../components/pintuan-home-list';
+  import tuiJianHomeTwoList from '../components/tuijian-home-two-list';
+  import powerby from '../components/foot-powerby';
+  export default class Home extends wepy.page {
+    config = {
+      enablePullDownRefresh: true,
+      // 引入vant 组件
+      usingComponents: {
+        notice: '../components/vant/notice-bar'
       }
     };
-    return _data;
-  }
-
-  onChangeInput (e) {
-    this.searchInput = e.detail.value;
-  }
-
-  onLoad (e) {
-    this._onGetSysParams('01');
-    this._onGetSysParams('08');
-    this._onGetSysParams('04');
-    this._onGetSysParams('10');
-    if (e.scene) {
-      let scene = decodeURIComponent(e.scene);
-      wepy.setStorageSync('referrer', scene);
-    } else {
-      e.inviterId && wepy.setStorageSync('referrer', e.inviterId);
-    }
-    console.log('referrer===', wepy.getStorageSync('referrer'));
-  }
-
-  onShow () {
-    this.userInfo = wepy.getStorageSync(USERINFO);
-  }
-
-  _init () {
-    // this._onGetSysParams('02');
-    this._onGetSysParams('05');
-    this._onGetBannerList();
-    this._onGetHomeCategory();
-    this._onGetSaleMenuList();
-    // this._onGetKanJiaList();
-    let params = {};
-    params.pingtuan = 'true';
-    this._onGetGoodsList(params, 'pingtuan');
-    let params1 = {};
-    params1.kanjia = 'true';
-    this._onGetGoodsList(params1, 'kanjia');
-    let params2 = {};
-    params2.page = this.curPage;
-    params2.pageSize = this.curLimit;
-    params2.recommendStatus = 1;
-    // params2.orderBy = 'ordersDown';
-    this._onGetGoodsList(params2, 'tuijian');
-  }
-
-  // 获取系统参数
-  _onGetSysParams (num) {
-    let _params = {
-      keys: num
+    // 组件指引
+    components = {
+      titlebar: titlebar,
+      banner: banner,
+      searchInput: searchInput,
+      loadMore: loadMore,
+      shopLabel: shopLabel,
+      kanJiaHomeList: kanJiaHomeList,
+      scrollGoodsList: scrollGoodsList,
+      tuiJianHomeList: tuiJianHomeList,
+      pinTuanHomeList: pinTuanHomeList,
+      powerby: powerby,
+      tuiJianHomeTwoList: tuiJianHomeTwoList
     };
-    apiUtil.onGetSysParamsApi(_params, res => {
-      if (res.data.code == 0) {
-        if (num == '02') {
-          this.shopLabelList = res.data.data[0].value.split('，');
-        } else if (num == '05') {
-          let params = {};
-          params.tagsLike = res.data.data[0].value;
-          this.tag = res.data.data[0].value;
-          this.customTitle = this.tag;
-          this._onGetGoodsList(params, 'tag');
-        } else if (num == '06') {
-          wepy.navigateTo({
-            url: '/packageA/pages/lotteryDetail?id=' + res.data.data[0].value
-          });
-        } else if (num == '01') {
-          this.version = res.data.data[0].value;
-          console.log('version', this.version);
-          if (this.version == null) {
-            wepy.navigateTo({ url: 'error' });
+    data = {
+      titleName: '',
+      version: null,
+      customTitle: '热卖爆款',
+      userInfo: null,
+      searchInput: '',
+      isNoData: false,
+      isLoadMore: false,
+      isRefresh: true,
+      bannerList: [],
+      menuList: [],
+      saleMenuList: [],
+      shopLabelList: [],
+      pingTuanList: null,
+      tuiJianList: null,
+      tagList: null,
+      tag: '',
+      kanjiaList: null,
+      curPage: 1, // 分页起始行
+      curLimit: 10, //分页每次加载的行数
+      shopPhone: null,
+      noticeContent: null // 公告内容
+    };
+    onShareAppMessage() {
+      let _data = {
+        title: this.titleName,
+        path: '/pages/home?' + 'inviterId=' + this.userInfo.uid + '&share=true',
+        imageUrl: this.bannerList[0].picUrl,
+        success: function(res) {
+          // 转发成功
+        },
+        fail: function(res) {
+          // 转发失败
+        }
+      };
+      return _data;
+    }
+    onChangeInput(e) {
+      this.searchInput = e.detail.value;
+    }
+    onLoad(e) {
+      this._onGetSysParams('01');
+      this._onGetSysParams('08');
+      this._onGetSysParams('04');
+      this._onGetSysParams('10');
+      if (e.scene) {
+        let scene = decodeURIComponent(e.scene);
+        wepy.setStorageSync('referrer', scene);
+      } else {
+        e.inviterId && wepy.setStorageSync('referrer', e.inviterId);
+      }
+      console.log('referrer===', wepy.getStorageSync('referrer'));
+    }
+    onShow() {
+      this.userInfo = wepy.getStorageSync(USERINFO);
+    }
+    _init() {
+      // this._onGetSysParams('02');
+      this._onGetSysParams('05');
+      this._onGetBannerList();
+      this._onGetHomeCategory();
+      this._onGetSaleMenuList();
+      // this._onGetKanJiaList();
+      let params = {};
+      params.pingtuan = 'true';
+      this._onGetGoodsList(params, 'pingtuan');
+      let params1 = {};
+      params1.kanjia = 'true';
+      this._onGetGoodsList(params1, 'kanjia');
+      let params2 = {};
+      params2.page = this.curPage;
+      params2.pageSize = this.curLimit;
+      params2.recommendStatus = 1;
+      // params2.orderBy = 'ordersDown';
+      this._onGetGoodsList(params2, 'tuijian');
+    }
+    // 获取系统参数
+    _onGetSysParams(num) {
+      let _params = {
+        keys: num
+      };
+      apiUtil.onGetSysParamsApi(_params, res => {
+        if (res.data.code == 0) {
+          if (num == '02') {
+            this.shopLabelList = res.data.data[0].value.split('，');
+          } else if (num == '05') {
+            let params = {};
+            params.tagsLike = res.data.data[0].value;
+            this.tag = res.data.data[0].value;
+            this.customTitle = this.tag;
+            this._onGetGoodsList(params, 'tag');
+          } else if (num == '06') {
+            wepy.navigateTo({
+              url: '/packageA/pages/lotteryDetail?id=' + res.data.data[0].value
+            });
+          } else if (num == '01') {
+            this.version = res.data.data[0].value;
+            console.log('version', this.version);
+            if (this.version == null) {
+              wepy.navigateTo({
+                url: 'error'
+              });
+              return;
+            }
+            this._init();
+          } else if (num == '08') {
+            this.shopPhone = res.data.data[0].value;
+          } else if (num == '04') {
+            this.titleName = res.data.data[0].value;
+          } else if (num == '10') {
+            this.noticeContent = res.data.data[0].value;
+          }
+          this.$apply();
+        } else {
+          if (num == '01') {
+            wepy.navigateTo({
+              url: 'error'
+            });
             return;
           }
-          this._init();
-        } else if (num == '08') {
-          this.shopPhone = res.data.data[0].value;
-        } else if (num == '04') {
-          this.titleName = res.data.data[0].value;
-        } else if (num == '10') {
-          this.noticeContent = res.data.data[0].value;
+          if (num == '06') {
+            tip.toast('当前暂无抽奖活动，敬请期待');
+            return;
+          }
+          // tip.toast(res.data.msg);
         }
-        this.$apply();
-      } else {
-        if (num == '01') {
-          wepy.navigateTo({ url: 'error' });
-          return;
+      });
+    }
+    // 获取营销工具菜单栏
+    _onGetSaleMenuList() {
+      this.saleMenuList = [{
+          name: '拼团',
+          icon: '../images/icon-pintuan.png'
+        },
+        {
+          name: '抽奖',
+          icon: '../images/icon-luckdraw.png'
+        },
+        {
+          name: '优惠券',
+          icon: '../images/icon-coupon.png'
+        },
+        {
+          name: '签到',
+          icon: '../images/icon-signin.png'
         }
-        if (num == '06') {
-          tip.toast('当前暂无抽奖活动，敬请期待');
-          return;
-        }
-        // tip.toast(res.data.msg);
-      }
-    });
-  }
-
-  // 获取营销工具菜单栏
-  _onGetSaleMenuList () {
-    this.saleMenuList = [
-      {
-        name: '拼团',
-        icon: '../images/icon-pintuan.png'
-      },
-      {
-        name: '抽奖',
-        icon: '../images/icon-luckdraw.png'
-      },
-      {
-        name: '优惠券',
-        icon: '../images/icon-coupon.png'
-      },
-      {
-        name: '签到',
-        icon: '../images/icon-signin.png'
-      }
-    ];
-  }
-
-  // 获取banner列表
-  _onGetBannerList () {
-    apiUtil.onGetBannerList({}, res => {
-      res.data.code == 0 && ((this.bannerList = res.data.data), this.$apply());
-    });
-  }
-
-  // 获取商品分类，筛选出首页展示分类
-  _onGetHomeCategory () {
-    let si = 0;
-    this.menuList = [];
-    apiUtil.onGetCategoryList({}, res => {
-      if (res.data.code == 0) {
-        for (let i = 0, j = res.data.data.length; i < j; i++) {
-          if (this.menuList.length < 4) {
-            res.data.data[i].level == 1 && this.menuList.push(res.data.data[i]);
-          } else {
-            if (this.version != '1') {
-              break;
-            } else if (si <= 1) {
-              if (res.data.data[i].level == 1) {
-                console.log('=====', si, res.data.data[i]);
-                this.saleMenuList[si] = res.data.data[i];
-                si++;
-              }
+      ];
+    }
+    // 获取banner列表
+    _onGetBannerList() {
+      apiUtil.onGetBannerList({}, res => {
+        res.data.code == 0 && ((this.bannerList = res.data.data), this.$apply());
+      });
+    }
+    // 获取商品分类，筛选出首页展示分类
+    _onGetHomeCategory() {
+      let si = 0;
+      this.menuList = [];
+      apiUtil.onGetCategoryList({}, res => {
+        if (res.data.code == 0) {
+          for (let i = 0, j = res.data.data.length; i < j; i++) {
+            if (this.menuList.length < 4) {
+              res.data.data[i].level == 1 && this.menuList.push(res.data.data[i]);
             } else {
-              break;
+              if (this.version != '1') {
+                break;
+              } else if (si <= 1) {
+                if (res.data.data[i].level == 1) {
+                  console.log('=====', si, res.data.data[i]);
+                  this.saleMenuList[si] = res.data.data[i];
+                  si++;
+                }
+              } else {
+                break;
+              }
             }
           }
+          console.log('menuList===', this.saleMenuList, this.menuList);
+          this.$apply();
         }
-        console.log('menuList===', this.saleMenuList, this.menuList);
-        this.$apply();
-      }
-    });
-  }
-
-  // 获取商品列表
-  _onGetGoodsList (params, type) {
-    // params.page = 1;
-    // params.pageSize = 10;
-    apiUtil.onGetGoodsListApi(params, res => {
-      if (res.data.code == 0) {
-        if (type == 'pingtuan') {
-          this.pingTuanList = res.data.data;
-        } else if (type == 'kanjia') {
-          this.kanjiaList = res.data.data;
-        } else if (type == 'tuijian') {
-          if (this.isRefresh) {
-            this.tuiJianList = res.data.data;
-          } else {
-            res.data.data.length > 0 &&
-              (this.tuiJianList = this.tuiJianList.concat(res.data.data));
+      });
+    }
+    // 获取商品列表
+    _onGetGoodsList(params, type) {
+      // params.page = 1;
+      // params.pageSize = 10;
+      apiUtil.onGetGoodsListApi(params, res => {
+        if (res.data.code == 0) {
+          if (type == 'pingtuan') {
+            this.pingTuanList = res.data.data;
+          } else if (type == 'kanjia') {
+            this.kanjiaList = res.data.data;
+          } else if (type == 'tuijian') {
+            if (this.isRefresh) {
+              this.tuiJianList = res.data.data;
+            } else {
+              res.data.data.length > 0 &&
+                (this.tuiJianList = this.tuiJianList.concat(res.data.data));
+            }
+          } else if (type == 'tag') {
+            this.tagList = res.data.data;
+            console.log('tagList==', this.tagList);
           }
-        } else if (type == 'tag') {
-          this.tagList = res.data.data;
-          console.log('tagList==', this.tagList);
+          this.$apply();
         }
-        this.$apply();
-      }
-      wx.stopPullDownRefresh();
-    });
-  }
-
-  _onGetKanJiaList () {
-    apiUtil.onGetKanJiaListApi({}, res => {
-      if (res.data.code == 0) {
-        for (let i = 0, j = res.data.data.totalRow; i < j; i++) {
-          let g = Object.assign(
-            res.data.data.result[i],
-            res.data.data.goodsMap[res.data.data.result[i].goodsId]
-          );
-          this.kanjiaList.push(g);
+        wx.stopPullDownRefresh();
+      });
+    }
+    _onGetKanJiaList() {
+      apiUtil.onGetKanJiaListApi({}, res => {
+        if (res.data.code == 0) {
+          for (let i = 0, j = res.data.data.totalRow; i < j; i++) {
+            let g = Object.assign(
+              res.data.data.result[i],
+              res.data.data.goodsMap[res.data.data.result[i].goodsId]
+            );
+            this.kanjiaList.push(g);
+          }
+          console.log('kanjiaList===', this.kanjiaList);
         }
-        console.log('kanjiaList===', this.kanjiaList);
-      }
-    });
-  }
-
-  /*
-   *@description: 内部刷新方法
-   *@author: mambaji
-   *@date: 2019-04-22 10:32:53
-  */
-
-  onPullDownRefresh () {
-    this.isRefresh = true;
-    this.curPage = 1;
-    this._init();
-  }
-
-  /*
-   *@description: 内部加载更多方法
-   *@author: mambaji
-   *@date: 2019-04-22 10:33:34
-  */
-  onReachBottom () {
-    this.isRefresh = false;
-    this.curPage++;
-    let params2 = {};
-    params2.recommendStatus = 1;
-    params2.page = this.curPage;
-    params2.pageSize = this.curLimit;
-    // params2.orderBy = 'ordersDown';
-    console.log('onReachBottom', params2.page);
-    this._onGetGoodsList(params2, 'tuijian');
-  }
-
-  methods = {
-    onSwpImageClick (e) {
-      if (e.type == 'goodsDetail') {
-        wepy.navigateTo({
-          url: '/packageA/pages/goodsDetail?goodsId=' + e.businessId
-        });
-      } else if (e.type == 'category') {
-        wepy.navigateTo({
-          url:
-            '/packageA/pages/goodsList?pageType=category&categoryId=' +
-            e.businessId +
-            '&titleName=' +
-            e.title
-        });
-      } else if (e.type == 'lottery') {
-        this._onGetSysParams('06');
-      } else if (e.type == 'articleGZH') {
-        wepy.navigateTo({ url: '/packageA/pages/articleGZH?url=' + e.linkUrl });
-      } else if (e.type == 'pintuan') {
-        wx.navigateTo({
-          url: '/packageA/pages/goodsList?pageType=pintuan&titleName=拼团优选'
-        });
-      } else if (e.type == 'kanjia') {
-        wx.navigateTo({
-          url: '/packageA/pages/goodsList?pageType=kanjia&titleName=限时砍价'
-        });
-      }
-    },
-    goToGoodsDetail (e) {
-      wepy.navigateTo({ url: '/packageA/pages/goodsDetail?goodsId=' + e });
-    },
-    goToKanJia (e) {
-      wepy.navigateTo({
-        url: '/packageA/pages/kanJiaGoodsDetail?goodsId=' + e
       });
-    },
-    onMenuClick (e) {
-      let item = this.menuList[e];
-      wx.navigateTo({
-        url:
-          '/packageA/pages/goodsList?pageType=category&titleName=' +
-          item.name +
-          '&categoryId=' +
-          item.id
-      });
-    },
-    onSaleMenuClick (e) {
-      let _t = this;
-      switch (e) {
-        case 0:
+    }
+    /*
+     *@description: 内部刷新方法
+     *@author: mambaji
+     *@date: 2019-04-22 10:32:53
+     */
+    onPullDownRefresh() {
+      this.isRefresh = true;
+      this.curPage = 1;
+      this._init();
+    }
+    /*
+     *@description: 内部加载更多方法
+     *@author: mambaji
+     *@date: 2019-04-22 10:33:34
+     */
+    onReachBottom() {
+      this.isRefresh = false;
+      this.curPage++;
+      let params2 = {};
+      params2.recommendStatus = 1;
+      params2.page = this.curPage;
+      params2.pageSize = this.curLimit;
+      // params2.orderBy = 'ordersDown';
+      console.log('onReachBottom', params2.page);
+      this._onGetGoodsList(params2, 'tuijian');
+    }
+    methods = {
+      onSwpImageClick(e) {
+        if (e.type == 'goodsDetail') {
+          wepy.navigateTo({
+            url: '/packageA/pages/goodsDetail?goodsId=' + e.businessId
+          });
+        } else if (e.type == 'category') {
+          wepy.navigateTo({
+            url: '/packageA/pages/goodsList?pageType=category&categoryId=' +
+              e.businessId +
+              '&titleName=' +
+              e.title
+          });
+        } else if (e.type == 'lottery') {
+          this._onGetSysParams('06');
+        } else if (e.type == 'articleGZH') {
+          wepy.navigateTo({
+            url: '/packageA/pages/articleGZH?url=' + e.linkUrl
+          });
+        } else if (e.type == 'pintuan') {
           wx.navigateTo({
             url: '/packageA/pages/goodsList?pageType=pintuan&titleName=拼团优选'
           });
-          break;
-        case 1:
-          _t._onGetSysParams('06');
-          break;
-        case 2:
-          if (!_t.userInfo) {
-            tip.toast('请先登录');
-            return;
-          }
-          wepy.navigateTo({ url: '/packageA/pages/mycoupons' });
-          break;
-        case 3:
-          wepy.navigateTo({ url: '/packageA/pages/score' });
-          break;
-      }
-    },
-    onSaleMenuClickT (e) {
-      let _t = this;
-      let item = this.saleMenuList[e];
-      switch (e) {
-        case 0:
+        } else if (e.type == 'kanjia') {
           wx.navigateTo({
-            url:
-              '/packageA/pages/goodsList?pageType=category&titleName=' +
-              item.name +
-              '&categoryId=' +
-              item.id
+            url: '/packageA/pages/goodsList?pageType=kanjia&titleName=限时砍价'
           });
-          break;
-        case 1:
+        }
+      },
+      goToGoodsDetail(e) {
+        wepy.navigateTo({
+          url: '/packageA/pages/goodsDetail?goodsId=' + e
+        });
+      },
+      goToKanJia(e) {
+        wepy.navigateTo({
+          url: '/packageA/pages/kanJiaGoodsDetail?goodsId=' + e
+        });
+      },
+      onMenuClick(e) {
+        let item = this.menuList[e];
+        wx.navigateTo({
+          url: '/packageA/pages/goodsList?pageType=category&titleName=' +
+            item.name +
+            '&categoryId=' +
+            item.id
+        });
+      },
+      onSaleMenuClick(e) {
+        let _t = this;
+        switch (e) {
+          case 0:
+            wx.navigateTo({
+              url: '/packageA/pages/goodsList?pageType=pintuan&titleName=拼团优选'
+            });
+            break;
+          case 1:
+            _t._onGetSysParams('06');
+            break;
+          case 2:
+            if (!_t.userInfo) {
+              tip.toast('请先登录');
+              return;
+            }
+            wepy.navigateTo({
+              url: '/packageA/pages/mycoupons'
+            });
+            break;
+          case 3:
+            wepy.navigateTo({
+              url: '/packageA/pages/score'
+            });
+            break;
+        }
+      },
+      onSaleMenuClickT(e) {
+        let _t = this;
+        let item = this.saleMenuList[e];
+        switch (e) {
+          case 0:
+            wx.navigateTo({
+              url: '/packageA/pages/goodsList?pageType=category&titleName=' +
+                item.name +
+                '&categoryId=' +
+                item.id
+            });
+            break;
+          case 1:
+            wx.navigateTo({
+              url: '/packageA/pages/goodsList?pageType=category&titleName=' +
+                item.name +
+                '&categoryId=' +
+                item.id
+            });
+            break;
+          case 2:
+            if (!_t.userInfo) {
+              tip.toast('请先登录');
+              return;
+            }
+            wepy.navigateTo({
+              url: '/packageA/pages/mycoupons'
+            });
+            break;
+          case 3:
+            wepy.navigateTo({
+              url: '/packageA/pages/score'
+            });
+            break;
+        }
+      },
+      onSearch() {
+        if (this.searchInput == '') {
+          tip.toast('请输入要搜索的商品名称');
+          return;
+        }
+        wx.navigateTo({
+          url: '/packageA/pages/goodsList?pageType=search&titleName=搜索结果&searchContent=' +
+            this.searchInput
+        });
+      },
+      toGoodsList(e) {
+        let type = e.currentTarget.dataset.type;
+        if (type == 'pingtuan') {
           wx.navigateTo({
-            url:
-              '/packageA/pages/goodsList?pageType=category&titleName=' +
-              item.name +
-              '&categoryId=' +
-              item.id
+            url: '/packageA/pages/goodsList?pageType=pintuan&titleName=拼团优选'
           });
-          break;
-        case 2:
-          if (!_t.userInfo) {
-            tip.toast('请先登录');
-            return;
-          }
-          wepy.navigateTo({ url: '/packageA/pages/mycoupons' });
-          break;
-        case 3:
-          wepy.navigateTo({ url: '/packageA/pages/score' });
-          break;
-      }
-    },
-    onSearch () {
-      if (this.searchInput == '') {
-        tip.toast('请输入要搜索的商品名称');
-        return;
-      }
-      wx.navigateTo({
-        url:
-          '/packageA/pages/goodsList?pageType=search&titleName=搜索结果&searchContent=' +
-          this.searchInput
-      });
-    },
-    toGoodsList (e) {
-      let type = e.currentTarget.dataset.type;
-      if (type == 'pingtuan') {
-        wx.navigateTo({
-          url: '/packageA/pages/goodsList?pageType=pintuan&titleName=拼团优选'
-        });
-      } else if (type == 'kanjia') {
-        wx.navigateTo({
-          url: '/packageA/pages/goodsList?pageType=kanjia&titleName=限时砍价'
-        });
-      } else if (type == 'lanmu') {
-        wx.navigateTo({
-          url:
-            '/packageA/pages/goodsList?pageType=lanmu&titleName=' +
-            this.customTitle +
-            '&tag= ' +
-            this.tag
-        });
-      } else if (type == 'tuijian') {
-        wx.navigateTo({
-          url: '/packageA/pages/goodsList?pageType=tuijian&titleName=商家推荐'
+        } else if (type == 'kanjia') {
+          wx.navigateTo({
+            url: '/packageA/pages/goodsList?pageType=kanjia&titleName=限时砍价'
+          });
+        } else if (type == 'lanmu') {
+          wx.navigateTo({
+            url: '/packageA/pages/goodsList?pageType=lanmu&titleName=' +
+              this.customTitle +
+              '&tag= ' +
+              this.tag
+          });
+        } else if (type == 'tuijian') {
+          wx.navigateTo({
+            url: '/packageA/pages/goodsList?pageType=tuijian&titleName=商家推荐'
+          });
+        }
+      },
+      callPhone() {
+        if (this.shopPhone == null) {
+          tip.toast('商家没有留下电话号码，请通过客服方式联系商家');
+          return;
+        }
+        wepy.makePhoneCall({
+          phoneNumber: this.shopPhone
         });
       }
-    },
-    callPhone () {
-      if (this.shopPhone == null) {
-        tip.toast('商家没有留下电话号码，请通过客服方式联系商家');
-        return;
-      }
-      wepy.makePhoneCall({ phoneNumber: this.shopPhone });
-    }
-  };
-}
+    };
+  }
 </script>
 <style lang="less">
-page {
-  background: #f8f9fc;
-}
-
-.goods-button {
-  position: fixed;
-  bottom: 200rpx;
-  right: 30rpx;
-  width: 80rpx;
-  height: 80rpx;
-  background: #fff;
-  box-shadow: 0 0 20rpx #eee;
-  border-radius: 50%;
-  opacity: 0.7;
-}
-
-.goods-button image {
-  width: 60rpx;
-  height: 60rpx;
-  display: block;
-  margin: 0 auto;
-  margin-top: 15rpx;
-  position: relative;
-}
-
-.goods-button image button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-}
-
-.menu-box {
-  width: 95%;
-  height: 324rpx;
-  background: #fff;
-  border-radius: 14rpx;
-  box-shadow: 0px 1px 30px 0px rgba(192, 192, 192, 0.21);
-  margin-top: 36rpx;
-  margin-left: auto;
-  margin-right: auto;
-  padding-bottom: 20rpx;
-}
-.menu-box_1 {
-  display: flex;
-  flex-direction: row;
-  padding: 0rpx 6%;
-  padding-top: 26rpx;
-  align-items: center;
-  justify-content: space-around;
-}
-.menu-box_2 {
-  display: flex;
-  flex-direction: row;
-  padding: 0rpx 6%;
-  align-items: center;
-  justify-content: space-around;
-  margin-top: 17rpx;
-}
-.menu-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  width: 130rpx;
-  image {
-    width: 90rpx;
-    height: 90rpx;
-    border-radius: 90rpx;
+  page {
+    background: #f8f9fc;
   }
-  text {
+  .goods-button {
+    position: fixed;
+    bottom: 200rpx;
+    right: 30rpx;
+    width: 80rpx;
+    height: 80rpx;
+    background: #fff;
+    box-shadow: 0 0 20rpx #eee;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+  .goods-button image {
+    width: 60rpx;
+    height: 60rpx;
+    display: block;
+    margin: 0 auto;
+    margin-top: 15rpx;
+    position: relative;
+  }
+  .goods-button image button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  .menu-box {
+    width: 95%;
+    height: 324rpx;
+    background: #fff;
+    border-radius: 14rpx;
+    box-shadow: 0px 1px 30px 0px rgba(192, 192, 192, 0.21);
+    margin-top: 36rpx;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 20rpx;
+  }
+  .menu-box_1 {
+    display: flex;
+    flex-direction: row;
+    padding: 0rpx 6%;
+    padding-top: 26rpx;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .menu-box_2 {
+    display: flex;
+    flex-direction: row;
+    padding: 0rpx 6%;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 17rpx;
+  }
+  .menu-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 130rpx;
+    image {
+      width: 90rpx;
+      height: 90rpx;
+      border-radius: 90rpx;
+    }
+    text {
+      font-size: 30rpx;
+      color: #767676;
+    }
+  }
+  .remai-container {
+    width: 95%;
+    background: #fff;
+    margin-top: 30rpx;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8rpx;
+  }
+  .pintuan-container {
+    width: 95%;
+    margin-top: 30rpx;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8rpx;
+  }
+  .kanjia-container {
+    width: 95%;
+    margin-top: 30rpx;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8rpx;
+  }
+  .tuijian-container {
+    width: 95%;
+    margin-top: 30rpx;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 8rpx;
+  }
+  .kanjia-container_title {
+    padding: 20rpx;
+    border-bottom: 1rpx solid #f2f2f2;
+  }
+  .search-container {
+    width: 100%;
+    display: flex;
+    background: #fff;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80rpx;
+    box-sizing: border-box;
+  }
+  .search-btn {
     font-size: 30rpx;
-    color: #767676;
+    color: #666;
+    width: 20%;
+    margin-left: 50rpx;
   }
-}
-
-.remai-container {
-  width: 95%;
-  background: #fff;
-  margin-top: 30rpx;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8rpx;
-}
-.pintuan-container {
-  width: 95%;
-  margin-top: 30rpx;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8rpx;
-}
-.kanjia-container {
-  width: 95%;
-  margin-top: 30rpx;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8rpx;
-}
-.tuijian-container {
-  width: 95%;
-  margin-top: 30rpx;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 8rpx;
-}
-.kanjia-container_title {
-  padding: 20rpx;
-  border-bottom: 1rpx solid #f2f2f2;
-}
-
-.search-container {
-  width: 100%;
-  display: flex;
-  background: #fff;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 80rpx;
-  box-sizing: border-box;
-}
-.search-btn {
-  font-size: 30rpx;
-  color: #666;
-  width: 20%;
-  margin-left: 50rpx;
-}
-
-.search-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  width: 70%;
-  height: 56rpx;
-  border-radius: 40rpx;
-  margin-left: 30rpx;
-  border: 1rpx solid #999;
-  .input {
-    margin-left: 30rpx;
+  .search-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     width: 70%;
-    font-size: 30rpx;
+    height: 56rpx;
+    border-radius: 40rpx;
+    margin-left: 30rpx;
+    border: 1rpx solid #999;
+    .input {
+      margin-left: 30rpx;
+      width: 70%;
+      font-size: 30rpx;
+    }
+    i {
+      margin-left: 20rpx;
+      font-size: 38rpx;
+    }
   }
-  i {
-    margin-left: 20rpx;
-    font-size: 38rpx;
-  }
-}
 </style>

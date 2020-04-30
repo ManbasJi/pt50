@@ -1,0 +1,123 @@
+<template>
+  <view class="{{beyondLenth?'menu-container':'menu-container-beyond'}}">
+    <repeat for="{{menuList}}"
+            index="index"
+            key="index"
+            items="item">
+      <view wx:if="{{index<9&&!isShowAll||isShowAll}}"
+            class="menu-list"
+            @tap="onMenuItemClick({{index}})">
+        <image src="{{item.icon}}"
+               mode="aspectFill" />
+        <text class="font5 zl-ellipsis">{{item.name}}</text>
+      </view>
+      <view wx:if="{{index==9&&!isShowAll}}"
+            @tap="onShowAll"
+            class="menu-list">
+        <image class="iconfont icon-category color-collision all-icon"></image>
+        <text class="font5"
+              style="color:#888888">更多</text>
+      </view>
+    </repeat>
+  </view>
+  <view wx:if="{{isShowAll}}"
+        @tap="onNotShowAll"
+        class="menu-list_drop">
+    <i class="iconfont icon-top font4 color-semi"></i>
+  </view>
+</template>
+
+<style lange="less">
+.menu-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1rpx solid #f8f9fc;
+  padding: 15rpx 3% 15rpx 3%;
+}
+.menu-container-beyond {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-start;
+  align-items: center;
+  background-color: #fff;
+  border: 1rpx solid #f8f9fc;
+  padding: 15rpx 3% 15rpx 3%;
+}
+.menu-list {
+  display: inline-block;
+  width: 25%;
+  text-align: center;
+  margin-top: 20rpx;
+}
+.menu-list image {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  display: block;
+  margin: 0 auto;
+  border-radius: 360rpx;
+}
+.menu-list text {
+  display: block;
+  color: #333;
+  margin-top: 8rpx;
+}
+.menu-list_drop {
+  text-align: right;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-right: 20rpx;
+  background: #fff;
+}
+.all-icon {
+  font-size: 50rpx;
+}
+</style>
+
+<script>
+import wepy from 'wepy';
+export default class menuList extends wepy.component {
+  props = {
+    menuList: {
+      defalut: [],
+      type: Object
+    }
+  };
+
+  data = {
+    beyondLength: false,
+    isShowAll: false
+  };
+
+  onLoad() {}
+
+  _init() {
+    this.menuList.length > 6
+      ? (this.beyondLength = true)
+      : (this.beyondLength = false);
+  }
+
+  methods = {
+    onMenuItemClick(e) {
+      this.$emit('menu-item-click', e);
+    },
+    onNotShowAll() {
+      this.isShowAll = false;
+    },
+    onShowAll() {
+      this.isShowAll = true;
+    },
+    onRefreshData(e) {
+      this.menuList = e;
+      this._init();
+    }
+  };
+}
+</script>
+
+

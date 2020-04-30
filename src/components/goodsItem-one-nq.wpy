@@ -1,0 +1,160 @@
+<template>
+  <repeat for="{{dataList}}"
+          key="index"
+          index="index"
+          item="item">
+    <view class="goods-item-container"
+          data-id="{{item.id}}"
+          @tap="onGoodsItemClick">
+      <image class="goods-image"
+             src="{{item.pic==''?'../images/image_null.png':item.pic}}"
+             mode="scaleToFill"
+             lazy-load="true" />
+      </image>
+      <view class="right-box">
+        <view class="goods-name font4-1">{{item.name}}</view>
+        <view class="goods-note font5">{{item.characteristic}}</view>
+        <view class="label-box">
+          <repeat for="{{goodsData.tagsList}}"
+                  key="index"
+                  index="index"
+                  items="tagItem">
+            <view class="label-item">{{tagItem}}</view>
+          </repeat>
+        </view>
+        <view class="goods-price-box flex-center_row"
+              style="justify-content:left">
+          <view class="kanjia-price flex-center_column">
+            <text class="font4-1 color-price">￥{{item.kanjiaPrice}}</text>
+            <text class="font6 color-semi">底价</text>
+          </view>
+          <view class="original-price flex-center_column"
+                style="margin-left:60rpx;">
+            <text class="font4-1 color-grey">￥{{item.minPrice}}</text>
+            <text class="font6 color-grey">原价</text>
+          </view>
+          <!-- <view class="kanjia-price flex-center_column">
+            <text class="font4-1 color-grey">￥{{item.kanjiaPrice}}</text>
+            <text class="font6 color-grey">限量</text>
+          </view> -->
+        </view>
+      </view>
+    </view>
+  </repeat>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class goodsItemOneNQ extends wepy.component {
+  props = {
+    dataList: {
+      default: [],
+      type: Object
+    },
+    showAction: Boolean,
+    useActionSlot: Boolean
+  };
+
+  data = {
+    windowWidth: 0
+  };
+
+  onLoad(e) {
+    console.log('goodsdata==', this.showAction, this.useActionSlot);
+  }
+
+  methods = {
+    onActionClick(e) {
+      this.$emit('action-click');
+    },
+    onGoodsItemClick(e) {
+      this.$emit('item-click', e.currentTarget.dataset.id);
+    }
+  };
+}
+</script>
+
+<style lang="less" scoped>
+.goods-item-container {
+  padding: 30rpx;
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.goods-image {
+  width: 244rpx;
+  height: 244rpx;
+  background: #f2f2f2;
+}
+.right-box {
+  margin-left: 30rpx;
+  height: 244rpx;
+  width: 416rpx;
+}
+.goods-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  color: #333;
+}
+.goods-note {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #999;
+  height: 40rpx;
+  margin-top: 5rpx;
+}
+.label-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  height: 34rpx;
+  line-height: 34rpx;
+  margin-top: 5rpx;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.label-item {
+  padding: 2rpx 5rpx;
+  background: #e36844;
+  color: #fff;
+  font-size: 20rpx;
+  margin-right: 10rpx;
+}
+.sell-num {
+  font-size: 24rpx;
+  color: #999;
+  height: 34rpx;
+  margin-top: 10rpx;
+}
+.goods-price {
+  font-size: 32rpx;
+  color: #d4282d;
+}
+.goods-oldprice {
+  font-size: 24rpx;
+  color: #999999;
+  margin-left: 10rpx;
+  text-decoration: line-through;
+}
+.goods-btn-action {
+  display: inline-block;
+  float: right;
+}
+.default-goods-action {
+  font-size: 28rpx;
+  color: #b4a078;
+  padding: 3rpx 5rpx;
+  border: 1rpx solid #b4a078;
+  border-radius: 10rpx;
+  background: #f5f3ef;
+}
+</style>
+
+

@@ -1,0 +1,140 @@
+<style lang="less" scoped>
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+.input-field_label {
+  margin-left: 10rpx;
+  min-width: 70rpx;
+}
+.input-field_textarea {
+  margin-left: 10rpx;
+  flex-grow: 1;
+}
+.input-field_input {
+  margin-left: 10rpx;
+  flex-grow: 1;
+}
+.left-icon {
+  font-size: 35rpx;
+  color: #585858;
+  // margin-left: 10rpx;
+}
+.clear-icon {
+  font-size: 40rpx;
+  color: #999;
+  margin-left: 20rpx;
+  margin-right: 10rpx;
+}
+.round {
+  border-radius: 50rpx;
+}
+.squary {
+  border-radius: 5rpx;
+}
+</style>
+
+<template>
+  <view class="container {{inputShape}}"
+        style="{{customClass}}">
+    <!-- <view class="input-field_label font4"
+          wx:if="{{label}}">{{label}}</view> -->
+    <i class="iconfont {{leftIcon}} left-icon"></i>
+    <textarea wx:if="{{type === 'textarea'}}"
+              class="input-field_textarea font4"
+              value="{{value}}"
+              disabled="{{disabled}}"
+              maxlength="{{maxlength}}"
+              auto-height="{{ autosize }}"
+              placeholder="{{ placeholder }}"
+              placeholder-class="{{ error ? 'input-field--error' : '' }}"
+              cursor-spacing="{{cursorSpacing}}"
+              bindinput="onInput"
+              bind:confirm="onConfirm"></textarea>
+    <input wx:else
+           class="input-field_input font5"
+           type="{{type}}"
+           value="{{value}}"
+           disabled="{{disabled}}"
+           maxlength="{{maxlength}}"
+           placeholder="{{placeholder}}"
+           placeholder-class="{{ error ? 'input-field--error' : '' }} font5"
+           cursor-spacing="{{cursorSpacing}}"
+           bindinput="onInput"
+           bind:confirm="onConfirm"></input>
+    <i class="iconfont icon-clear clear-icon"
+       wx:if="{{showClear}}"
+       @tap.stop="onClear"></i>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class inputField extends wepy.component {
+  props = {
+    customClass: {
+      type: String
+    },
+    type: {
+      type: String,
+      default: 'text'
+    },
+    inputShape: {
+      type: String,
+      default: 'squary'
+    },
+    maxlength: {
+      type: Number,
+      default: -1
+    },
+    label: {
+      type: String,
+      default: ''
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    autoHeight: {
+      type: Boolean,
+      default: false
+    },
+    fixed: {
+      type: Boolean,
+      default: false
+    },
+    placeholder: {
+      type: String,
+      default: '请输入...'
+    },
+    cursorSpacing: {
+      type: Number,
+      default: 0
+    },
+    leftIcon: {
+      type: String,
+      default: 'icon-search'
+    },
+    showClear: {
+      type: String,
+      default: ''
+    },
+    bgcolor: {
+      type: String,
+      default: '#fff'
+    }
+  };
+
+  methods = {
+    onClear() {
+      this.value = '';
+    },
+    onInput(e) {
+      this.$emit('bind-input', e);
+    }
+  };
+}
+</script>

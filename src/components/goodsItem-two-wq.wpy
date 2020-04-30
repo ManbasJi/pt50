@@ -1,0 +1,133 @@
+<template>
+  <view class="goods-container">
+    <view class="goods-list"
+          wx:for-items="{{dataList}}"
+          wx:key="{{index}}"
+          data-sellnum="{{item.fSellNum}}"
+          data-id="{{item.id}}"
+          @tap="onGoodsItemClick">
+      <image mode="widthFix"
+             lazy-load="true"
+             src="{{item.pic}}" />
+      <view class="goods-list-text"
+            wx:if="{{item.characteristic}}">{{item.characteristic}}</view>
+      <view class="goods-list-bottom">
+        <!-- <text class="goods-list-label"
+              wx:if="{{item.tags!='无'}}">{{item.tags}}</text> -->
+        <view class="goods-list-title zl-multi-ellipsis--l2">{{item.name}}</view>
+        <view class="price-box">
+          <text class="min-price">￥{{item.minPrice}}</text>
+          <text class="original-price"
+                wx:if="{{item.originalPrice!=0}}">￥{{item.originalPrice}}</text>
+          <text class="number-sells">已售{{item.numberSells}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class goodsItemTwoWQ extends wepy.component {
+  props = {
+    dataList: {
+      type: Array,
+      default: []
+    }
+  };
+  methods = {
+    onGoodsItemClick(e) {
+      this.$emit('item-click', e.currentTarget.dataset.id);
+    }
+  };
+}
+</script>
+<style lang="less" scoped>
+.goods-container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+}
+.goods-list {
+  width: 45%;
+  overflow: hidden;
+  margin-bottom: 50rpx;
+  position: relative;
+  box-sizing: border-box;
+  margin-left: 3.3%;
+  background: #fff;
+}
+
+.goods-list image {
+  width: 100%;
+}
+
+.goods-list-title {
+  font-size: 30rpx;
+  color: #333;
+  margin-top: 5rpx;
+  padding-left: 10rpx;
+}
+
+.goods-list-text {
+  position: relative;
+  margin-top: -70rpx;
+  background: #f4f0ea;
+  font-size: 24rpx;
+  padding-left: 10rpx;
+  color: #be9a60;
+  height: 70rpx;
+  line-height: 80rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.goods-list-label {
+  background-color: #ef7e83;
+  color: #fff;
+  font-size: 20rpx;
+  margin-left: 10rpx;
+  margin-top: 5rpx;
+  padding: 2rpx 8rpx;
+}
+.goods-list-money {
+  position: absolute;
+  font-size: 24rpx;
+  color: #3c3c3c;
+  padding-left: 10rpx;
+  bottom: 40rpx;
+  right: 20rpx;
+}
+.goods-list-sellNum {
+  position: absolute;
+  font-size: 24rpx;
+  color: #cdcdcd;
+  padding-left: 10rpx;
+  bottom: 15rpx;
+  right: 20rpx;
+}
+.price-box {
+  display: flex;
+  flex-direction: row;
+  height: 60rpx;
+  align-items: flex-end;
+}
+.min-price {
+  font-size: 30rpx;
+  color: #dc3d27;
+}
+.original-price {
+  font-size: 26rpx;
+  color: #333;
+  text-decoration: line-through;
+  margin-left: 8rpx;
+}
+.number-sells {
+  font-size: 26rpx;
+  color: #b2b2b2;
+  flex-grow: 1;
+  text-align: right;
+}
+</style>

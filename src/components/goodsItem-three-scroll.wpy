@@ -1,0 +1,89 @@
+<template>
+  <view class="gds-swiper-container">
+    <swiper class="gds-swiper_box"
+            autoplay="true"
+            interval="5000"
+            duration="1000"
+            display-multiple-items="3"
+            indicator-active-color="#c62828">
+      <block wx:for="{{dataList}}"
+             wx:key="id">
+        <swiper-item class="gbs-slide-item">
+          <view class="gbs-item"
+                data-id="{{item.id}}"
+                @tap="onGoodsItemClick">
+            <image class="gbs-img"
+                   src="{{item.pic}}"
+                   mode="aspectFit"></image>
+            <!-- <view class="gbs-babel">{{item.tags}}</view> -->
+            <view style="margin-top:8rpx;"
+                  class="font6 color-semi zl-ellipsis">{{item.name}}</view>
+            <view style="margin-top:8rpx;">
+              <text class="font5 color-price">￥{{item.pingtuanPrice}}</text>
+              <text class="font6"
+                    style="color:#333;text-decoration: line-through;margin-left:8rpx;">￥{{item.originalPrice}}</text>
+            </view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class goodsItemThreeScroll extends wepy.component {
+  config = {};
+
+  props = {
+    dataList: {
+      type: Array,
+      default: []
+    }
+  };
+
+  methods = {
+    onGoodsItemClick(e) {
+      this.$emit('item-click', e.currentTarget.dataset.id);
+    }
+  };
+}
+</script>
+<style lang="less" scoped>
+.gds-container {
+  width: 100%;
+  background: #fff;
+}
+.gds-swiper-container {
+  background: #fff;
+  margin-bottom: 18rpx;
+}
+.gds-swiper_box {
+  height: 350rpx;
+  padding: 10rpx 20rpx;
+}
+
+.gbs-slide-item {
+  // height: 400rpx;
+}
+.gbs-item {
+  width: 90%;
+  height: 240rpx;
+  margin-left: 5%;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+}
+.gbs-img {
+  width: 100%;
+  max-height: 210rpx;
+}
+.gbs-babel {
+  padding: 1rpx 8rpx;
+  font-size: 22rpx;
+  background: #ec666d;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+  border-radius: 5rpx;
+}
+</style>
+

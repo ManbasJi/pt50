@@ -1,0 +1,100 @@
+<style lang="less" scoped>
+.banner_swpitem {
+  margin: 0rpx auto;
+  box-shadow: -6rpx 14rpx 21rpx 0rpx rgba(214, 214, 214, 0.48);
+  border-radius: 12rpx;
+}
+.banner_swpimage {
+  width: 100%;
+  height: 100%;
+  border-radius: 12rpx;
+}
+</style>
+<template>
+  <swiper class="banner_swpitem"
+          style="width:{{width}}%;height:{{width/scale}}vw;{{customStyle}}"
+          indicator-dots="{{dots}}"
+          autoplay="{{autoPlay}}"
+          previous-margin="{{pmargin}}"
+          next-margin="{{nmargin}}"
+          circular>
+    <block wx:for="{{bannerList}}"
+           wx:key="{{item}}">
+      <swiper-item style="border-radius: 12rpx;"
+                   wx:if="{{index!=0}}">
+        <image class="banner_swpimage"
+               style="{{imgCustomStyle}}"
+               mode="widthFit"
+               lazy-load="true"
+               src="{{item.picUrl}}"
+               @tap="onSwiperItemClick({{item}})"></image>
+      </swiper-item>
+    </block>
+  </swiper>
+</template>
+<script>
+import wepy from 'wepy';
+export default class banner extends wepy.component {
+  props = {
+    imgCustomStyle: String,
+    customStyle: String,
+    bannerList: {
+      type: Object,
+      default: []
+    },
+    isNavigator: {
+      type: String,
+      default: 'false'
+    },
+    autoPlay: {
+      type: Boolean,
+      default: true
+    },
+    dots: {
+      type: Boolean,
+      default: true
+    },
+    width: {
+      type: String,
+      default: '98'
+    },
+    scale: {
+      type: String,
+      default: '1.9'
+    },
+    nmargin: {
+      type: String,
+      default: 0
+    },
+    pmargin: {
+      type: String,
+      default: 0
+    }
+  };
+
+  data = {};
+
+  onLoad () { }
+
+  methods = {
+    onSwiperItemClick (e) {
+      console.log(e);
+      if (this.isNavigator == 'true') {
+        this.$emit('image-click', e);
+      } else {
+        let urlList = [];
+        for (let i in this.bannerList) {
+          urlList.push(this.bannerList[i].ImgURL);
+        }
+        wx.previewImage({
+          current: e.ImgURL, // 当前显示图片的链接，不填则默认为 urls 的第一张
+          urls: urlList
+        });
+      }
+    },
+    onRefreshData (e) {
+      this.bannerList = e;
+    }
+  };
+}
+</script>

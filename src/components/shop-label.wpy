@@ -1,0 +1,65 @@
+<style>
+.parent-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  background: #fff;
+  padding: 5px 0;
+}
+.child-container {
+  display: flex;
+  align-items: center;
+}
+.text-class {
+  font-size: 12px;
+  color: #333;
+  margin-left: 5px;
+  letter-spacing: 1px;
+}
+</style>
+
+<template>
+  <view class="parent-container">
+    <repeat for="{{shopLabelList}}"
+            index="index"
+            key="key"
+            items="item">
+      <view class="child-container">
+        <i class="iconfont icon-success"
+           style="font-size:14px;color:#ff0000"></i>
+        <text class="text-class">{{item}}</text>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+/**
+ * 商城首页店铺标签，如：全场包邮，自营品牌
+ * 商品详情页的时候也可以使用，针对某个商品，如：限时特惠，假一赔十，7天无理由退换
+ **/
+
+import wepy from 'wepy';
+export default class shopLabel extends wepy.component {
+  props = {
+    shopLabelList: {
+      default: [],
+      type: Object
+    },
+    num: {
+      default: 0,
+      type: Object
+    }
+  };
+  data = {};
+  onLoad() {
+    console.log('dataList=======', this.num);
+  }
+  events = {};
+  methods = {};
+}
+</script>
+
+

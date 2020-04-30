@@ -1,0 +1,87 @@
+<style lang="less" scoped>
+.scroll-x {
+  overflow: hidden;
+  white-space: nowrap;
+  background: #fff;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  height: 80rpx;
+}
+.label-scrollx_main {
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.label-scrollx_title {
+  display: inline-block;
+  min-width: 60rpx;
+  margin-left: 40rpx;
+  font-size: 28rpx;
+  padding: 10rpx 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+</style>
+<template>
+  <scroll-view class="scroll-x"
+               scroll-x="true"
+               scroll-with-animation>
+    <view class="label-scrollx_main">
+      <repeat for="{{labelScrollList}}"
+              key="index"
+              index="index"
+              item="item">
+        <view class="label-scrollx_title zl-ellipsis"
+              style="{{activeIndex==index?'color:'+color+';':''}}{{isline&&activeIndex==index?'border-bottom:4rpx solid '+color+';':''}} {{customStyleTitle}} "
+              @tap="onTitleItemClick({{index}})">
+          {{item.name}}
+        </view>
+      </repeat>
+    </view>
+  </scroll-view>
+</template>
+
+<script>
+import wepy from 'wepy';
+export default class babelScrollRowList extends wepy.component {
+  props = {
+    labelScrollList: {
+      type: Object,
+      twoWay: true
+    },
+    color: {
+      type: String,
+      default: '#5677fc'
+    },
+    isline: {
+      type: String,
+      default: ''
+    },
+    activeIndex: {
+      type: Number,
+      default: 0
+    },
+    customStyleTitle: String,
+    left: String,
+    right: String,
+    top: String,
+    bottom: String
+  };
+
+  data = {};
+
+  onLoad() {
+    console.log('dataList==', this.labelScrollList);
+  }
+
+  methods = {
+    onTitleItemClick(e) {
+      this.activeIndex = e;
+      this.$emit('item-click', e);
+    },
+    onRefreshData(e) {
+      this.labelScrollList = e;
+      console.log(this.labelScrollList);
+    }
+  };
+}
+</script>

@@ -1,0 +1,94 @@
+<style lang="less" scoped>
+.fixed {
+  width: 100%;
+  position: fixed;
+}
+.container {
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10rpx 25rpx;
+  box-sizing: border-box;
+}
+.search-input_btn {
+  margin-left: 20rpx;
+  min-width: 80rpx;
+}
+</style>
+
+<template>
+  <view class="container {{fixed?'fixed':''}}"
+        style="margin-top:{{top}}rpx;margin-left:{{left}}rpx;margin-right:{{right}}rpx;margin-bottom:{{bottom}}rpx;">
+    <inputField :customClass.sync="inputFieldClass"
+                :type.sync="type"
+                :value.sync="value"
+                :label.sync="label"
+                :showClear.sync="showClear"
+                :disabled.sync="disabled"
+                :maxlength.sync="maxlength"
+                :placeholder.sync="placeholder"
+                :fixed.sync="fixed"
+                @bind-input.user="onSearchBindInput"></inputField>
+    <view wx:if="{{showAction || useActionSlot}}">
+      <slot wx:if="{{useActionSlot}}"
+            name="action"></slot>
+      <view wx:if="{{!userActionSlot}}"
+            @tap="onSearch"
+            class="search-input_btn font4-1">搜索</view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import inputField from '@/components/input-field-zl';
+export default class searchInput extends wepy.component {
+  components = {
+    inputField: inputField
+  };
+
+  props = {
+    inputFieldClass: String,
+    showAction: {
+      type: String,
+      default: ''
+    },
+    userActionSlot: {
+      type: String,
+      default: ''
+    },
+    maxlength: {
+      type: Number,
+      default: -1
+    },
+    showClear: String,
+    label: String,
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    fixed: {
+      type: Boolean,
+      default: false
+    },
+    type: String,
+    value: String,
+    placeholder: String,
+    left: String,
+    right: String,
+    top: String,
+    bottom: String
+  };
+
+  onLoad() {}
+
+  methods = {
+    onSearch() {
+      this.$emit('action-click', this.value);
+    },
+    onSearchBindInput(e) {
+      this.value = e.detail.value;
+    }
+  };
+}
+</script>

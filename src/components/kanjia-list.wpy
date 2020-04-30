@@ -1,0 +1,157 @@
+<template>
+  <view class="container">
+    <view wx:if="{{type=='all'}}"
+          class="kanjia-list"
+          wx:for="{{dataList}}"
+          wx:key="{{index}}"
+          bindtap="gokj"
+          data-id="{{item.goodsId}}">
+      <image class="goods"
+             src="{{item.pic}}" />
+      <view class="list-box">
+        <view class="list-box-title">{{item.name}}</view>
+        <view class="list-box-info">{{item.characteristic}}</view>
+        <view class="list-box-kjmin">
+          <text>¥{{item.minPrice}}</text>最低价</view>
+        <view class="list-box-kjmax">
+          <text>¥{{item.originalPrice}}</text>原价</view>
+        <view class="list-box-sales">
+          <text>{{item.number}}</text>限量</view>
+      </view>
+    </view>
+    <view wx:if="{{type=='my' && item.myMsg}}"
+          class="kanjia-list"
+          wx:for="{{dataList}}"
+          wx:key="{{index}}"
+          bindtap="gokj"
+          data-index="{{index}}"
+          data-id="{{item.id}}">
+      <image class="goods"
+             src="{{item.goodsMsg.pic}}" />
+      <view class="list-box">
+        <view class="list-box-title">{{item.goodsMsg.name}}</view>
+        <view class="list-box-info">{{item.goodsMsg.characteristic}}</view>
+        <view class="list-box-kjmin">
+          <text>¥{{item.originalPrice-item.myMsg.curPrice}}</text>已砍</view>
+        <view class="list-box-kjmax">
+          <text>¥{{item.myMsg.curPrice-item.minPrice}}</text>待砍</view>
+        <view class="list-box-sales">
+          <text>{{item.minPrice}}</text>底价</view>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+export default class kanJiaList extends wepy.component {
+  props = {
+    dataList: {
+      type: Array,
+      default: []
+    },
+    type: {
+      type: String,
+      default: 'all'
+    }
+  };
+
+  methods = {
+    gokj(e) {
+      this.$emit('item-click', e.currentTarget.dataset.id);
+    }
+  };
+}
+</script>
+<style lang="less" scoped>
+.container {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+.header-container {
+  background-color: #fff;
+}
+
+.iphone {
+  margin-top: 180rpx;
+}
+
+.kanjia-list {
+  width: 100%;
+  height: 130px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f5f5f5;
+  padding-top: 15px;
+  font-weight: 300;
+}
+
+.kanjia-list .goods {
+  width: 110px;
+  height: 110px;
+  float: left;
+  border-radius: 6rpx;
+  margin-left: 10px;
+}
+
+.list-box-title {
+  padding-left: 15px;
+}
+
+.list-box {
+  color: #333;
+  font-size: 30rpx;
+  float: left;
+  padding-top: 10px;
+  width: 62%;
+}
+
+.list-box-info {
+  color: #999;
+  font-size: 24rpx;
+  padding-top: 2px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+}
+
+.list-box-kjmin {
+  display: inline-block;
+  text-align: center;
+  width: 30%;
+  font-size: 24rpx;
+  border-right: 1px solid #f5f5f5;
+}
+
+.list-box-kjmin text {
+  display: block;
+  color: #b5272d;
+  font-size: 32rpx;
+}
+
+.list-box-kjmax {
+  display: inline-block;
+  text-align: center;
+  width: 30%;
+  font-size: 24rpx;
+  color: #999;
+  border-right: 1px solid #f5f5f5;
+}
+
+.list-box-kjmax text {
+  display: block;
+  font-size: 28rpx;
+}
+
+.list-box-sales {
+  display: inline-block;
+  text-align: center;
+  width: 30%;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.list-box-sales text {
+  display: block;
+  font-size: 28rpx;
+}
+</style>

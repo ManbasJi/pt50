@@ -1,0 +1,78 @@
+<template>
+  <view class="{{imgUrl?'img-container':'container'}}"
+        @tap="toContact">
+    <view wx:if="{{!imgUrl}}"
+          class="name">{{content}}</view>
+    <image wx:if="{{imgUrl}}"
+           class="img"
+           src="{{imgUrl}}"
+           mode="widthFix"
+           lazy-load="true">
+    </image>
+  </view>
+</template>
+<script>
+import wepy from 'wepy';
+import apiUtil from '@/api/apiUtil';
+export default class footPowerby extends wepy.component {
+  props = {
+    content: {
+      type: Object,
+      default: '— 恒博科技 提供技术支持 —'
+    }
+  };
+
+  data = {
+    imgUrl: null,
+  };
+
+  onLoad () {
+    this._onGetSysParams('09')
+  }
+
+  // 获取系统参数
+  _onGetSysParams (num) {
+    let _params = {
+      keys: num
+    };
+    apiUtil.onGetSysParamsApi(_params, res => {
+      if (res.data.code == 0) {
+        this.imgUrl = res.data.data[0].value
+        this.$apply();
+      } else {
+
+      }
+    });
+  }
+
+  methods = {
+    toContact () {
+      wepy.navigateTo({ url: '/packageA/pages/contactUs' });
+    }
+  };
+}
+</script>
+<style lang="less" scoped>
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50rpx 0;
+}
+.name {
+  font-size: 30rpx;
+  color: #d6dde6;
+}
+.img-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.img {
+  width: 100%;
+}
+</style>

@@ -1,0 +1,144 @@
+<style lang="less">
+@import './styles/icon';
+@import './styles/base';
+@import './styles/common';
+@import './styles/weui.wxss';
+page {
+  background: #f8f9fc;
+}
+.container {
+  height: 100%;
+}
+
+.wxParse-img {
+  display: block !important;
+}
+
+.header-container {
+  width: 100%;
+  height: 130rpx;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.header-container .header-name {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 170rpx;
+  font-size: 38rpx;
+  color: #333;
+}
+
+.iphone .header-container {
+  height: 180rpx;
+}
+
+.iphone .header-container .header-name {
+  line-height: 270rpx;
+}
+
+.header-container .goback {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 50rpx;
+  position: absolute;
+  margin-left: 20rpx;
+  border: 1rpx solid #fff;
+  border-radius: 50%;
+  padding: 6rpx;
+  background: #fff;
+}
+
+.iphone .header-container .goback {
+  margin-top: 90rpx;
+}
+
+.click-hover {
+  background: #f2f2f2;
+}
+
+.click-hover-o {
+  opacity: 0.5;
+}
+</style>
+
+<script>
+import wepy from 'wepy';
+import 'wepy-async-function';
+import apiUtil from '@/api/apiUtil';
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/home',
+    ],
+    // 需要分包的时候使用
+    // subPackages: [
+    //   {
+    //     root: 'packageA',
+    //     name: 'packA',
+    //     pages: [
+    //     ]
+    //   }
+    // ],
+    permission: {
+      'scope.userLocation': {
+        desc: '您的位置信息将用于小程序位置接口的效果展示'
+      }
+    },
+    window: {
+      backgroundTextStyle: 'dark',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black',
+      navigationStyle: 'custom'
+    },
+    // 首页底部导航栏
+    // tabBar: {
+    //   color: '#333333',
+    //   selectedColor: '#ff0000',
+    //   backgroundColor: '#ffffff',
+    //   borderStyle: 'black',
+    //   list: [
+    //     {
+    //       pagePath: 'pages/home',
+    //       text: '首页',
+    //       iconPath: '/images/home_icon.png',
+    //       selectedIconPath: '/images/homesele_icon.png'
+    //     }
+    //   ]
+    // }
+  };
+
+  globalData = {
+    appId: 'wx1f1e07f4d81db1f9',
+    secert: '12ab02fd9697a6a2809cad45291e841e'
+  };
+
+  constructor() {
+    super();
+    this.use('requestfix');
+    this.use('promisify');
+  }
+
+  onLaunch () {
+    //  打开小程序时检测版本是否更新
+    const updateManager = wx.getUpdateManager();
+    updateManager.onCheckForUpdate(function (res) { });
+    updateManager.onUpdateReady(function () {
+      wx.showModal({
+        title: '更新提示',
+        content: '新版本已经准备好，请重启应用!',
+        success (res) {
+          if (res.confirm) {
+            updateManager.applyUpdate();
+          }
+        }
+      });
+    });
+  }
+
+}
+</script>

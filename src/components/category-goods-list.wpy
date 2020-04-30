@@ -1,0 +1,124 @@
+<template>
+  <filterBar wx:if="{{goodsList.length>0}}"
+             @currentType.user="currentType"></filterBar>
+  <!-- <goodsItemOneNQ :dataList.sync="goodsList"
+                  @item-click.user="goToKanJia"></goodsItemOneNQ> -->
+</template>
+<script>
+import wepy from 'wepy';
+import tip from '@/utils/tip';
+import goodsItemOneNQ from '@/components/goodsItem-one-nq';
+import filterBar from '@/components/filter_bar';
+import apiUtil from '@/api/apiUtil';
+export default class categoryGoodsList extends wepy.component {
+  config = {
+    enablePullDownRefresh: true
+  };
+  components = {
+    goodsItemOneNQ: goodsItemOneNQ,
+    filterBar: filterBar
+  };
+  data = {
+    labelList: [],
+    goodsList: [],
+    categoryId: null,
+    isRefresh: true,
+    isLoadMore: false,
+    isNoData: false,
+    curPage: 1, // 分页起始行
+    curLimit: 10, //分页每次加载的行数
+    orderBy: 'addedDown' // addedUp，addedDown,priceUp ，priceDown ，ordersUp ，ordersDown，
+  };
+
+  onLoad() {}
+
+  // 获取商品列表
+  _onGetGoodsList() {
+    tip.loading();
+    let _params = {};
+    _params.page = this.curPage;
+    _params.pageSize = this.curLimit;
+    _params.orderBy = this.orderBy;
+    _params.categoryId = this.categoryId;
+
+    apiUtil.onGetGoodsListApi(_params, res => {
+      if (res.data.code == 0) {
+        if (this.isRefresh) {
+          this.goodsList = res.data.data;
+        } else {
+          res.data.data.length > 0 &&
+            (this.goodsList = this.goodsList.concat(res.data.data));
+        }
+      } else {
+        if (!this.isRefresh) {
+          this.isNoData = true;
+        }
+      }
+      wx.stopPullDownRefresh();
+      tip.loaded();
+      this.$apply();
+    });
+  }
+
+  /*
+   *@description: 内部刷新方法
+   *@author: mambaji
+   *@date: 2019-04-22 10:32:53
+  */
+  onPullDownRefresh() {
+    this._onRefresh();
+  }
+
+  /*
+   *@description: 内部加载更多方法
+   *@author: mambaji
+   *@date: 2019-04-22 10:33:34
+  */
+  onReachBottom() {
+    this._onLoadMore();
+  }
+
+  _onRefresh() {
+    this.isRefresh = true;
+    this.curPage = 1;
+    this._onGetGoodsList();
+  }
+
+  _onLoadMore() {
+    this.isRefresh = false;
+    this.isLoadMore = true;
+    this.curPage++;
+    this._onGetGoodsList();
+  }
+
+  methods = {
+    // 更新二级分类数据
+    onRefreshData(e) {
+      this.categoryId = e;
+      this.isRefresh = true;
+      this.curPage = 1;
+      this._onGetGoodsList();
+    },
+    currentType(obj) {
+      //tip.success("状态:" + obj);
+      let name = obj.name;
+      let type = obj.type;
+      if (name == 'zonghe') {
+        this.orderBy = 'addedDown';
+      } else if (name == 'sale') {
+        this.orderBy = 'ordersDown';
+      } else if (name == 'price') {
+        if (type == 'desc') {
+          this.orderBy = 'priceDown';
+        } else if (type == 'asc') {
+          this.orderBy = 'priceUp';
+        }
+      }
+      this.curPage = 1;
+      this.isRefresh = true;
+      this._onGetGoodsList();
+      //this.$invoke('search', 'show', "0");
+    }
+  };
+}
+</script>

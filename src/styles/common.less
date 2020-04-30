@@ -1,0 +1,156 @@
+// 单行文本溢出处理
+.zl-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis
+}
+
+// 两行文本溢出处理
+.zl-multi-ellipsis--l2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2
+}
+
+// 三行文本溢出处理
+.zl-multi-ellipsis--l3 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3
+}
+
+.van-hairline,
+.van-hairline--bottom,
+.van-hairline--left,
+.van-hairline--right,
+.van-hairline--surround,
+.van-hairline--top,
+.van-hairline--top-bottom {
+  position: relative
+}
+
+.van-hairline--bottom::after,
+.van-hairline--left::after,
+.van-hairline--right::after,
+.van-hairline--surround::after,
+.van-hairline--top-bottom::after,
+.van-hairline--top::after,
+.van-hairline::after {
+  content: ' ';
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  -webkit-transform: scale(.5);
+  transform: scale(.5);
+  border: 0 solid #eee
+}
+
+.van-hairline--top::after {
+  border-top-width: 1px
+}
+
+.van-hairline--left::after {
+  border-left-width: 1px
+}
+
+.van-hairline--right::after {
+  border-right-width: 1px
+}
+
+.van-hairline--bottom::after {
+  border-bottom-width: 1px
+}
+
+.van-hairline--top-bottom::after {
+  border-width: 1px 0
+}
+
+.van-hairline--surround::after {
+  border-width: 1px
+}
+
+.animationSlow {
+  width: 100rpx;
+  height: 100rpx;
+  animation-name: myfirst;
+  /*动画的名称 */
+  animation-duration: 2000ms;
+  /*动画从开始到结束的时间*/
+  animation-timing-function: linear;
+  /*动画执行快慢的参数*/
+  animation-iteration-count: infinite;
+  /*动画执行多少次的参数*/
+  /*以下是兼容ios所需，参数意义与上相同*/
+  -webkit-animation-name: myfirst;
+  -webkit-animation-duration: 2000ms;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@keyframes myfirst {
+
+  /*开始转的角度*/
+  from {
+    transform: rotate(0deg);
+  }
+
+  /*结束的角度*/
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*兼容ios*/
+@-webkit-keyframes myfirst {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.drop-list {
+  padding: 20rpx 0;
+}
+
+.drop-list_item {
+  text-align: center;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.drop-list_item:last-child {
+  border-bottom: 0rpx;
+}
+
+.flex-center_row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.flex-center_column{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flex-center{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+} 

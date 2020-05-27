@@ -1,0 +1,25 @@
+<template>
+  <view>StandBy</view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class StandBy extends wepy.page {
+  config = {
+    usingComponents: {}
+  }
+
+  data = {
+
+  }
+
+  onLoad () {
+
+  }
+
+  methods = {
+
+  }
+}
+</script>
+<style lang="less" scoped>
+</style>

@@ -72,22 +72,11 @@ import apiUtil from '@/api/apiUtil';
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/home',
+      'pages/train',
+      'pages/control',
+      'pages/standBy',
+      'pages/settings'
     ],
-    // 需要分包的时候使用
-    // subPackages: [
-    //   {
-    //     root: 'packageA',
-    //     name: 'packA',
-    //     pages: [
-    //     ]
-    //   }
-    // ],
-    permission: {
-      'scope.userLocation': {
-        desc: '您的位置信息将用于小程序位置接口的效果展示'
-      }
-    },
     window: {
       backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#fff',
@@ -96,20 +85,30 @@ export default class extends wepy.app {
       navigationStyle: 'custom'
     },
     // 首页底部导航栏
-    // tabBar: {
-    //   color: '#333333',
-    //   selectedColor: '#ff0000',
-    //   backgroundColor: '#ffffff',
-    //   borderStyle: 'black',
-    //   list: [
-    //     {
-    //       pagePath: 'pages/home',
-    //       text: '首页',
-    //       iconPath: '/images/home_icon.png',
-    //       selectedIconPath: '/images/homesele_icon.png'
-    //     }
-    //   ]
-    // }
+    tabBar: {
+      color: '#333333',
+      selectedColor: '#ff0000',
+      backgroundColor: '#ffffff',
+      borderStyle: 'black',
+      list: [
+        {
+          pagePath: 'pages/train',
+          text: '训练',
+        },
+        {
+          pagePath: 'pages/control',
+          text: '控制',
+        },
+        {
+          pagePath: 'pages/standBy',
+          text: '支持',
+        },
+        {
+          pagePath: 'pages/train',
+          text: '设置',
+        }
+      ]
+    }
   };
 
   globalData = {

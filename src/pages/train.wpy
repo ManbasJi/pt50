@@ -1,0 +1,36 @@
+<template>
+  <view>Train</view>
+</template>
+<script>
+import wepy from 'wepy';
+import tip from '@/utils/tip';
+import {
+  USERINFO
+} from '@/utils/constant';
+import apiUtil from '../api/apiUtil';
+// 引入组件
+import titlebar from '../components/title-bar-zl';
+import powerby from '../components/foot-powerby';
+export default class Home extends wepy.page {
+  config = {
+    enablePullDownRefresh: true,
+    usingComponents: {
+    }
+  }
+  // 组件指引
+  components = {
+    titlebar: titlebar,
+  }
+  data = {
+    titleName: '',
+  }
+  onLoad (e) {
+  }
+  onShow () {
+  }
+  methods = {
+  }
+}
+</script>
+<style lang="less">
+</style>

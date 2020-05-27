@@ -1,0 +1,25 @@
+<template>
+  <view>Control</view>
+</template>
+<script>
+import wepy from 'wepy'
+export default class Control extends wepy.page {
+  config = {
+    usingComponents: {}
+  }
+
+  data = {
+
+  }
+
+  onLoad () {
+
+  }
+
+  methods = {
+
+  }
+}
+</script>
+<style lang="less" scoped>
+</style>
